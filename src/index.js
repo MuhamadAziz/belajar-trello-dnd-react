@@ -12,20 +12,6 @@ const Container = styled.div`
 
 class App extends React.Component {
     state = initialData;
-
-    // onDragStart = () =>{
-    //     document.body.style.color = 'orange';
-    //     document.body.style.transition = 'background-color 0.2s ease';
-    // }
-
-    // onDragUpdate = update => {
-    //     const {destination} = update;
-    //     const opacity = destination
-    //         ? destination.index / Object.keys(this.state.tasks).length
-    //         : 0;
-        
-    //     document.body.style.backgroundColor = `rgba(153, 141, 217, ${opacity})`;
-    // }
     onDragEnd = result => {
        
         // TODO Penggunaan On Drag End
@@ -42,7 +28,7 @@ class App extends React.Component {
             return;
         }
 
-
+            
         const start = this.state.columns[source.droppableId];
         const finish = this.state.columns[destination.droppableId];
 
@@ -59,15 +45,42 @@ class App extends React.Component {
             const newState = {
                 ...this.state,
                 columns: { 
-                    ...this.state.column,
+                    ...this.state.columns,
                     [newColumn.id]: newColumn,
                 }
             }
             this.setState(newState);
             return;
-            }
         }
 
+        const starTaskIds = Array.from(start.taskIds);
+        starTaskIds.splice(source.index, 1);
+        const newStart = {
+            ...start,
+            taskIds: starTaskIds,
+        };
+
+
+        // const finishTaskIds = Array.from(finish.taskIds);
+        // finishTaskIds.splice(destination.index, 0, draggableId);
+        // const newFinish = {
+        //     ...finish,
+        //     taskIds: finishTaskIds,
+        // };
+
+        const newState = {
+            ...this.state,
+            columns: {
+                ...this.state.columns,
+                [newStart.id]: newStart,
+                // [newFinish.id]: newFinish,
+            },
+        }
+        this.setState(newState);
+    };
+
+
+  
     render() {
         return (
         <DragDropContext 

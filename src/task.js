@@ -12,27 +12,25 @@ background-color: ${props => (props.isDragging ? 'lightgreen' : 'white')};
 display:flex;
 `;
 
-const Handle =styled.div`
-    width: 20px;
-    heigh:20px;
-    background-color: orange;
-    border-radius: 4px;
-    margin-right: 8px;
-`;
+// const Handle =styled.div`
+//     width: 20px;
+//     heigh:20px;
+//     background-color: orange;
+//     border-radius: 4px;
+//     margin-right: 8px;
+// `;
 export default class Task extends React.Component {
     render() {
         return  (
             <Draggable draggableId={this.props.task.id} index={this.props.index}>
               {(provided, snapshot) => (
                 <Container
+                    {...provided.dragHandleProps} 
+                        {...provided.draggableProps}
                     ref={provided.innerRef}
                     isDragging={snapshot.isDragging}
-                    {...provided.draggableProps}
-                    {...provided.dragHandleProps} 
                 >
-                <Handle 
-                 
-                />
+ 
                     { this.props.task.content }
                 </Container>
               )}
